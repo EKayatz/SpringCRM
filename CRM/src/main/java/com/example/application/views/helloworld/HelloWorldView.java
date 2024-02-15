@@ -22,5 +22,4 @@ public class HelloWorldView extends HorizontalLayout {
     public HelloWorldView() {
       add (new H1("Hello WOrld!"));
     }
-
 }
