@@ -1,4 +1,4 @@
-package com.example.application.service;
+package com.example.application.services;
 
 import com.example.application.data.Company;
 import com.example.application.data.Contact;
@@ -11,17 +11,17 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CRMService {
+public class CrmService {
+
     private final ContactRepository contactRepository;
     private final CompanyRepository companyRepository;
     private final StatusRepository statusRepository;
 
-    public CRMService(
-                        ContactRepository contactRepository,
-                        CompanyRepository companyRepository,
-                        StatusRepository statusRepository) {
-        this.companyRepository = companyRepository;
+    public CrmService(ContactRepository contactRepository,
+                      CompanyRepository companyRepository,
+                      StatusRepository statusRepository) {
         this.contactRepository = contactRepository;
+        this.companyRepository = companyRepository;
         this.statusRepository = statusRepository;
     }
 

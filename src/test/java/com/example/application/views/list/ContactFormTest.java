@@ -2,9 +2,7 @@ package com.example.application.views.list;
 
 import com.example.application.data.Company;
 import com.example.application.data.Contact;
-import com.example.application.views.list.ContactForm;
 import com.example.application.data.Status;
-import com.example.application.views.list.ContactForm.SaveEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +69,7 @@ public class ContactFormTest {
         form.status.setValue(status2);
 
         AtomicReference<Contact> savedContactRef = new AtomicReference<>(null);
-        form.addSaveListener(ContactForm.SaveEvent.class, e -> {
+        form.addSaveListener(e -> {
             savedContactRef.set(e.getContact());
         });
         form.save.click();

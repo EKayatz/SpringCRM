@@ -1,6 +1,6 @@
 package com.example.application.views;
 
-import com.example.application.service.CRMService;
+import com.example.application.services.CrmService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.charts.Chart;
 import com.vaadin.flow.component.charts.model.ChartType;
@@ -13,35 +13,35 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import jakarta.annotation.security.PermitAll;
 
-@Route(value="dashboard", layout = MainLayout.class)
-@PageTitle("Dashboard ELias CRM")
 @PermitAll
+@Route(value = "dashboard", layout = MainLayout.class) // <1>
+@PageTitle("Dashboard | Elias CRM")
 public class DashboardView extends VerticalLayout {
+    private final CrmService service;
 
-    private final CRMService service;
-
-    public DashboardView(CRMService service) {
+    public DashboardView(CrmService service) { // <2>
         this.service = service;
         addClassName("dashboard-view");
-        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+        setDefaultHorizontalComponentAlignment(Alignment.CENTER); // <3>
+
         add(getContactStats(), getCompaniesChart());
-        
     }
 
     private Component getContactStats() {
-        Span stats = new Span(service.countContacts() + " contact");
+        Span stats = new Span(service.countContacts() + " contacts"); // <4>
         stats.addClassNames(
                 LumoUtility.FontSize.XLARGE,
                 LumoUtility.Margin.Top.MEDIUM);
         return stats;
     }
-    private Component getCompaniesChart() {
+
+    private Chart getCompaniesChart() {
         Chart chart = new Chart(ChartType.PIE);
 
         DataSeries dataSeries = new DataSeries();
-        service.findAllCompanies().forEach(company -> dataSeries.add(new DataSeriesItem(company.getName(), company.getEmployeeCount())));
+        service.findAllCompanies().forEach(company ->
+                dataSeries.add(new DataSeriesItem(company.getName(), company.getEmployeeCount()))); // <5>
         chart.getConfiguration().setSeries(dataSeries);
         return chart;
     }
-
 }

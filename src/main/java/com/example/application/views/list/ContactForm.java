@@ -36,8 +36,6 @@ public class ContactForm extends FormLayout {
     public ContactForm(List<Company> companies, List<Status> statuses) {
         addClassName("contact-form");
         binder.bindInstanceFields(this);
-//        binder.forField(status).bind(Contact::getStatus, Contact::setStatus);
-//        binder.forField(company).bind(Contact::getCompany, Contact::setCompany);
 
         company.setItems(companies);
         company.setItemLabelGenerator(Company::getName);
@@ -60,23 +58,23 @@ public class ContactForm extends FormLayout {
         save.addClickShortcut(Key.ENTER);
         close.addClickShortcut(Key.ESCAPE);
 
-        save.addClickListener(event -> validateAndSave());
-        delete.addClickListener(event -> fireEvent(new DeleteEvent(this, binder.getBean())));
-        close.addClickListener(event -> fireEvent(new CloseEvent(this)));
+        save.addClickListener(event -> validateAndSave()); // <1>
+        delete.addClickListener(event -> fireEvent(new DeleteEvent(this, binder.getBean()))); // <2>
+        close.addClickListener(event -> fireEvent(new CloseEvent(this))); // <3>
 
-        binder.addStatusChangeListener(e -> save.setEnabled(binder.isValid()));
+        binder.addStatusChangeListener(e -> save.setEnabled(binder.isValid())); // <4>
         return new HorizontalLayout(save, delete, close);
     }
 
     private void validateAndSave() {
         if(binder.isValid()) {
-            fireEvent(new SaveEvent(this, binder.getBean()));
+            fireEvent(new SaveEvent(this, binder.getBean())); // <6>
         }
     }
 
 
     public void setContact(Contact contact) {
-        binder.setBean(contact);
+        binder.setBean(contact); // <1>
     }
 
     // Events
@@ -112,11 +110,11 @@ public class ContactForm extends FormLayout {
         }
     }
 
-    public Registration addDeleteListener(Class<DeleteEvent> deleteEventClass, ComponentEventListener<DeleteEvent> listener) {
+    public Registration addDeleteListener(ComponentEventListener<DeleteEvent> listener) {
         return addListener(DeleteEvent.class, listener);
     }
 
-    public Registration addSaveListener(Class<SaveEvent> saveEventClass, ComponentEventListener<SaveEvent> listener) {
+    public Registration addSaveListener(ComponentEventListener<SaveEvent> listener) {
         return addListener(SaveEvent.class, listener);
     }
     public Registration addCloseListener(ComponentEventListener<CloseEvent> listener) {
@@ -125,3 +123,4 @@ public class ContactForm extends FormLayout {
 
 
 }
+

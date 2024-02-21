@@ -12,8 +12,6 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
-import java.awt.*;
-
 public class MainLayout extends AppLayout {
     private final SecurityService securityService;
 
@@ -29,10 +27,13 @@ public class MainLayout extends AppLayout {
                 LumoUtility.FontSize.LARGE,
                 LumoUtility.Margin.MEDIUM);
 
-        Button logout = new Button("Log out ", e -> securityService.logout());
-        HorizontalLayout header = new HorizontalLayout(new DrawerToggle(), logo, logout);
+        String u = securityService.getAuthenticatedUser().getUsername();
+        Button logout = new Button("Logout " + u, e -> securityService.logout()); // <2>
+
+        var header = new HorizontalLayout(new DrawerToggle(), logo, logout);
+
         header.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.CENTER);
-        header.expand(logo);
+        header.expand(logo); // <4>
         header.setWidthFull();
         header.addClassNames(
                 LumoUtility.Padding.Vertical.NONE,
@@ -41,12 +42,11 @@ public class MainLayout extends AppLayout {
         addToNavbar(header);
 
     }
+
     private void createDrawer() {
         addToDrawer(new VerticalLayout(
                 new RouterLink("List", ListView.class),
-              new RouterLink("Dashboard", DashboardView.class)
+                new RouterLink("Dashboard", DashboardView.class)
         ));
-
     }
-
 }

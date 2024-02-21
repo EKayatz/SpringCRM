@@ -11,8 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.NoSuchElementException;
-
 @SpringBootTest
 public class ListViewTest {
 
@@ -27,8 +25,7 @@ public class ListViewTest {
     @Test
     public void formShownWhenContactSelected() {
         Grid<Contact> grid = listView.grid;
-        Contact firstContact;
-        firstContact = getFirstItem(grid);
+        Contact firstContact = getFirstItem(grid);
 
         ContactForm form = listView.form;
 
@@ -39,10 +36,6 @@ public class ListViewTest {
     }
 
     private Contact getFirstItem(Grid<Contact> grid) {
-        ListDataProvider<Contact> dataProvider = (ListDataProvider<Contact>) grid.getDataProvider();
-        if (dataProvider.getItems().isEmpty()) {
-            throw new NoSuchElementException("Grid data provider is empty");
-        }
-        return dataProvider.getItems().iterator().next();
+        return( (ListDataProvider<Contact>) grid.getDataProvider()).getItems().iterator().next();
     }
 }
