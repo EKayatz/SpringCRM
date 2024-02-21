@@ -1,4 +1,4 @@
-package com.example.application.secruity;
+package com.example.application.security;
 
 import com.example.application.views.LoginView;
 import com.vaadin.flow.spring.security.VaadinWebSecurity;
@@ -32,7 +32,8 @@ public class SecurityConfig extends VaadinWebSecurity {
         UserDetails user = User.builder()
                 .username("user")
                 // password = password with this hash, don't tell anybody :-)
-                .password("{bcrypt}$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW")
+                //.password("{bcrypt}$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW")
+                .password("{noop}1234")
                 .roles("USER")
                 .build();
         UserDetails admin = User.builder()

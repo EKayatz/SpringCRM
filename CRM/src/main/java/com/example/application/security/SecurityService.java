@@ -4,7 +4,7 @@ import com.vaadin.flow.spring.security.AuthenticationContext;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 @Component
-public class SecrurityService {
+public class SecurityService {
 
     private AuthenticationContext authenticationContext;
 
